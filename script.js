@@ -17,9 +17,9 @@ document.getElementById(id).innerText=count;
 
 }
 
-animateCounter("projects",8);
-animateCounter("labs",150);
-animateCounter("focus",4);
+animateCounter("projects",4);
+animateCounter("labs done",150);
+animateCounter("focus",5);
 
 const canvas=document.getElementById("bg");
 const ctx=canvas.getContext("2d");
