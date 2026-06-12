@@ -1,30 +1,62 @@
+function animateCounter(id,target){
+    let value=0;
 
-function animate(id,target){
- let v=0;
- const t=setInterval(()=>{
-   v+=Math.ceil(target/40);
-   if(v>=target){v=target;clearInterval(t);}
-   document.getElementById(id).textContent=v;
- },40);
+    const timer=setInterval(()=>{
+        value += Math.ceil(target/40);
+
+        if(value>=target){
+            value=target;
+            clearInterval(timer);
+        }
+
+        document.getElementById(id).innerText=value;
+    },40);
 }
-animate('c1',12);
-animate('c2',150);
-animate('c3',8);
 
-const c=document.getElementById('bg');
-const ctx=c.getContext('2d');
-function resize(){c.width=innerWidth;c.height=innerHeight;}
-resize();addEventListener('resize',resize);
+animateCounter("projects",8);
+animateCounter("labs",150);
+animateCounter("focus",4);
 
-let p=[...Array(80)].map(()=>({x:Math.random()*c.width,y:Math.random()*c.height,v:0.5+Math.random()}));
+const canvas=document.getElementById("bg");
+const ctx=canvas.getContext("2d");
+
+function resize(){
+    canvas.width=window.innerWidth;
+    canvas.height=window.innerHeight;
+}
+
+resize();
+
+window.addEventListener("resize",resize);
+
+const particles=[];
+
+for(let i=0;i<100;i++){
+    particles.push({
+        x:Math.random()*canvas.width,
+        y:Math.random()*canvas.height,
+        size:Math.random()*2+1
+    });
+}
+
 function draw(){
- ctx.clearRect(0,0,c.width,c.height);
- p.forEach(a=>{
-   a.y+=a.v;
-   if(a.y>c.height)a.y=0;
-   ctx.fillStyle='rgba(0,255,255,.7)';
-   ctx.fillRect(a.x,a.y,2,2);
- });
- requestAnimationFrame(draw);
+
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+
+    particles.forEach(p=>{
+
+        p.y += 0.5;
+
+        if(p.y > canvas.height){
+            p.y = 0;
+        }
+
+        ctx.fillStyle="cyan";
+        ctx.fillRect(p.x,p.y,p.size,p.size);
+
+    });
+
+    requestAnimationFrame(draw);
 }
+
 draw();
